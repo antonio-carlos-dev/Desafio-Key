@@ -318,10 +318,10 @@ db:
 ```
 
 ## Usando a API
-1- Criar um usuário [auth register]
-2- Criar usuários do time [user create]
-3- Criar um Time [team create]
-4- Associar mais pessoas ao time [team partner]
-5- Criar um projeto [project create]
-6- Criar as colunas [column create]
-7- Criar os cards [card create]
+1- Criar um usuário [auth register]<br>
+2- Criar usuários do time [user create]<br>
+3- Criar um Time [team create]<br>
+4- Associar mais pessoas ao time [team partner]<br>
+5- Criar um projeto [project create]<br>
+6- Criar as colunas [column create]<br>
+7- Criar os cards [card create]<br>
