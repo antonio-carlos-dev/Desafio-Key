@@ -319,9 +319,10 @@ db:
 
 ## Usando a API
 1- Criar um usuário [auth register]
-2- Criar usuários do time [user create]
+2- Criar usuários [user create]
 3- Criar um Time [team create]
-4- Associar mais pessoas ao time [team partner]
+4- Associar mais pessoas ao time [team associate]
+5- Desassociar pessoas ao time [team disassociate]
 5- Criar um projeto [project create]
 6- Criar as colunas [column create]
 7- Criar os cards [card create]
