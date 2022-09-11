@@ -1,21 +1,21 @@
-## Como configurar Laravel, Nginx, e MySQL com Docker Compose
+## Ambiente de desenvolvimento utilizando PHP 8.1 , Nginx e MySQL com Docker Compose
 ## Passo 1 — Fazendo download do Projeto e instalando dependências
 
-Primeiramente faça uma cópia da versão mais recente do Projeto para um diretório chamado desafio-key:
-    $ git clone https://github.com/antonio-carlos-dev/Desafio-Key desafio-key
+Primeiramente faça um clone da versão mais recente do Projeto:
+    $ git clone https://github.com/antonio-carlos-dev/Desafio-Key
 
 Vá até o diretório desafio-key/www:
     $ cd desafio-key/www
 
 Em seguida vamos clonar o Framework Laravel
-    $ git clone --depth 1 --branch v8.6.11 https://github.com/laravel/laravel.git .
+    $ git clone https://github.com/antonio-carlos-dev/desafio-api .
 
 Em seguida, utilize a imagem do composer para montar os diretórios que você precisará para seu projeto:
     $ docker run --rm -it --volume $(pwd):/app composer install
 
 ## Passo 2 - Modificando as configurações do ambiente e executando os contêineres
 
-Como passo final vamos fazer uma cópia do arquivo .env.example que o Laravel inclui por padrão e nomear a copia .env, que é o arquivo que o Laravel espera para definir seu ambiente:
+Como passo final vamos fazer uma cópia do arquivo .env.example que o Laravel inclui por padrão e nomear a copia para .env, que é o arquivo que o Laravel espera para definir seu ambiente:
 
     $ cp .env.example .env
 
@@ -71,8 +71,8 @@ Para colocar essas configurações em um arquivo de cache, que irá aumentar a v
 
 Suas definições da configuração serão carregadas em /var/www/bootstrap/cache/config.php no contêiner.
 
-Como passo final, visite http://localhost:8080 no navegador.
-Você verá a página inicial para seu aplicativo Laravel:
+Como passo final, visite http://localhost:8080/swagger no navegador.
+Você verá a documentação da API:
 
 ## Passo 3 - Criando um usuário para o MySQL
 
@@ -126,19 +126,32 @@ Primeiramente, teste a conexão com o MySQL executando o comando Laravel artisan
 
     $ docker-compose exec app php artisan migrate
 
-Este comando irá migrar as tabelas padrão do Laravel. O resultado que confirma a migração será como este:
+Este comando irá executar as migrations. O resultado que confirma a migração será como este:
 
 ```
 Output
 
-Migration table created successfully.
 Migrating: 2014_10_12_000000_create_users_table
-Migrated:  2014_10_12_000000_create_users_table
+Migrated:  2014_10_12_000000_create_users_table (25.49ms)
 Migrating: 2014_10_12_100000_create_password_resets_table
-Migrated:  2014_10_12_100000_create_password_resets_table
+Migrated:  2014_10_12_100000_create_password_resets_table (25.66ms)
+Migrating: 2019_08_19_000000_create_failed_jobs_table
+Migrated:  2019_08_19_000000_create_failed_jobs_table (27.41ms)
+Migrating: 2019_12_14_000001_create_personal_access_tokens_table
+Migrated:  2019_12_14_000001_create_personal_access_tokens_table (32.72ms)
+Migrating: 2022_09_09_124725_user_add_softdelete
+Migrated:  2022_09_09_124725_user_add_softdelete (20.35ms)
+Migrating: 2022_09_10_191731_create_teams_table
+Migrated:  2022_09_10_191731_create_teams_table (92.76ms)
+Migrating: 2022_09_10_192220_create_projects_table
+Migrated:  2022_09_10_192220_create_projects_table (80.63ms)
+Migrating: 2022_09_10_192356_create_columns_table
+Migrated:  2022_09_10_192356_create_columns_table (62.11ms)
+Migrating: 2022_09_11_011405_create_cards_table
+Migrated:  2022_09_11_011405_create_cards_table (42.46ms)
 ```
 
-Assim que a migração for concluída, você pode fazer uma consulta para verificar se está devidamente conectado ao banco de dados usando o comando tinker:
+Assim que concluído, você pode fazer uma consulta para verificar se está devidamente conectado ao banco de dados usando o comando tinker:
 
     $ docker-compose exec app php artisan tinker
 
@@ -150,21 +163,51 @@ Você verá um resultado que se parece com este:
 
 ```
 Output
-=> Illuminate\Support\Collection {#3147
+=> Illuminate\Support\Collection {#4520
      all: [
-       {#3145
+       {#4529
          +"id": 1,
          +"migration": "2014_10_12_000000_create_users_table",
          +"batch": 1,
        },
-       {#3154
+       {#4531
          +"id": 2,
          +"migration": "2014_10_12_100000_create_password_resets_table",
          +"batch": 1,
        },
-       {#3155
+       {#4532
          +"id": 3,
          +"migration": "2019_08_19_000000_create_failed_jobs_table",
+         +"batch": 1,
+       },
+       {#4533
+         +"id": 4,
+         +"migration": "2019_12_14_000001_create_personal_access_tokens_table",
+         +"batch": 1,
+       },
+       {#4534
+         +"id": 5,
+         +"migration": "2022_09_09_124725_user_add_softdelete",
+         +"batch": 1,
+       },
+       {#4535
+         +"id": 6,
+         +"migration": "2022_09_10_191731_create_teams_table",
+         +"batch": 1,
+       },
+       {#4536
+         +"id": 7,
+         +"migration": "2022_09_10_192220_create_projects_table",
+         +"batch": 1,
+       },
+       {#4537
+         +"id": 8,
+         +"migration": "2022_09_10_192356_create_columns_table",
+         +"batch": 1,
+       },
+       {#4538
+         +"id": 9,
+         +"migration": "2022_09_11_011405_create_cards_table",
          +"batch": 1,
        },
      ],
@@ -273,3 +316,12 @@ db:
   ...
 
 ```
+
+## Usando a API
+1- Criar um usuário [auth register]
+2- Criar usuários do time [user create]
+3- Criar um Time [team create]
+4- Associar mais pessoas ao time [team partner]
+5- Criar um projeto [project create]
+6- Criar as colunas [column create]
+7- Criar os cards [card create]
