@@ -124,7 +124,7 @@ Por fim, saia do contêiner:
 
 Primeiramente, teste a conexão com o MySQL executando o comando Laravel artisan migrate, que cria uma tabela migrations no banco de dados de dentro do contêiner:
 
-    $ docker-compose exec app php artisan migrate
+    $ docker-compose exec app php artisan migrate --seed
 
 Este comando irá executar as migrations. O resultado que confirma a migração será como este:
 
